@@ -43,7 +43,9 @@ next-env.d.ts
 /src/generated/prisma
 
 # Internal Context
-/context/
+/context/*
+!/context/specific/
+/context/specific/*
 !/context/specific/branding.json
 /directives/
 /execution/
