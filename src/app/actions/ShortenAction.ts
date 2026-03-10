@@ -35,6 +35,11 @@ export async function shortenUrlAction(formData: FormData): Promise<ShortenResul
             throw new Error("Firebase Admin DB not initialized. Please ensure your environment variables are set and the server has been restarted.");
         }
 
+        const headersList = await (await import("next/headers")).headers();
+        const host = headersList.get("host");
+        const protocol = host?.includes("localhost") ? "http" : "https";
+        const baseUrl = `${protocol}://${host}`;
+
         console.log("Checking if slug already exists:", slug);
         const docRef = db.collection("links").doc(slug);
         let doc;
@@ -54,13 +59,13 @@ export async function shortenUrlAction(formData: FormData): Promise<ShortenResul
 
             return {
                 success: true,
-                shortUrl: `${process.env.NEXT_PUBLIC_APP_URL}/${slug}`,
+                shortUrl: `${baseUrl}/${slug}`,
                 qrDataUrl: data?.qr_data_url,
             };
         }
 
         // Generate QR code for the short URL
-        const shortUrl = `${process.env.NEXT_PUBLIC_APP_URL}/${slug}`;
+        const shortUrl = `${baseUrl}/${slug}`;
         const qrDataUrl = await generateQrCode(shortUrl);
 
         // Save to Firestore
