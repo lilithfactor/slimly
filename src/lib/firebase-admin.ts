@@ -15,11 +15,15 @@ function initializeAdmin() {
                 });
             } catch (e) {
                 console.error("Firebase Admin initialization failed:", e);
+                return null;
             }
         } else if (projectId) {
             admin.initializeApp({
                 projectId: projectId
             });
+        } else {
+            // No credentials or project ID, likely build time
+            return null;
         }
     }
     return admin.firestore();
