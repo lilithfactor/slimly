@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BrandingConfig } from '@/lib/branding';
@@ -21,6 +21,7 @@ export function Navbar({ branding }: NavbarProps) {
     const [displayLikes, setDisplayLikes] = useState(0);
     const [liked, setLiked] = useState(false);
     const [likeLoading, setLikeLoading] = useState(false);
+    const heartRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const hasLiked = localStorage.getItem("slimly_liked");
@@ -29,14 +30,14 @@ export function Navbar({ branding }: NavbarProps) {
 
     useEffect(() => {
         if (!db) return;
-        
+
         const statsRef = doc(db, "stats", "global");
         const unsubscribe = onSnapshot(statsRef, (snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.data();
                 const newLinks = data.total_links || 0;
                 const newLikes = data.total_likes || 0;
-                
+
                 setStats({
                     totalLinks: newLinks,
                     totalLikes: newLikes,
@@ -61,22 +62,38 @@ export function Navbar({ branding }: NavbarProps) {
 
     useEffect(() => {
         const obj = { val: displayLikes };
+        const targetValue = (branding.initialLikesCount || 0) + stats.totalLikes;
         gsap.to(obj, {
-            val: stats.totalLikes,
+            val: targetValue,
             duration: 1.5,
             ease: "power2.out",
             onUpdate: () => setDisplayLikes(Math.floor(obj.val))
         });
-    }, [stats.totalLikes]);
+    }, [stats.totalLikes, branding.initialLikesCount]);
 
-    const handleLike = async () => {
+    const handleLike = async (e: React.MouseEvent) => {
         if (liked || likeLoading) return;
+        
+        // 1. Optimistic Update
+        setLiked(true);
+        localStorage.setItem("slimly_liked", "true");
+        
+        // 2. Heart "Pop" Animation (Directly via Ref for speed)
+        if (heartRef.current) {
+            gsap.fromTo(heartRef.current, 
+                { scale: 1 }, 
+                { scale: 1.5, duration: 0.15, yoyo: true, repeat: 1, ease: "back.out(1.7)" }
+            );
+        }
+
         setLikeLoading(true);
         const res = await likeProjectAction();
         if (res.success) {
-            localStorage.setItem("slimly_liked", "true");
-            setLiked(true);
             trackEvent("Heart Clicked");
+        } else {
+            // Revert on failure
+            setLiked(false);
+            localStorage.removeItem("slimly_liked");
         }
         setLikeLoading(false);
     };
@@ -100,8 +117,12 @@ export function Navbar({ branding }: NavbarProps) {
             `}</style>
 
             {/* Stats Pill: # Links Out # <heart> In */}
-            <div 
-                className="flex items-center gap-4 px-5 py-2.5 glass-panel rounded-full border-white/5 bg-black/40 backdrop-blur-xl shadow-2xl border border-white/10 select-none pointer-events-auto cursor-pointer group active:scale-95 transition-transform"
+            <div
+                className={`flex items-center gap-4 px-5 py-2.5 glass-panel rounded-full border-white/5 bg-black/40 backdrop-blur-xl shadow-2xl border border-white/10 select-none pointer-events-auto transition-all ${
+                    liked 
+                        ? 'cursor-default ring-1 ring-white/10' 
+                        : 'cursor-pointer group hover:bg-black/50'
+                }`}
                 onClick={handleLike}
             >
                 {/* Links Out */}
@@ -116,18 +137,21 @@ export function Navbar({ branding }: NavbarProps) {
                 <div className="w-0.5 h-3 bg-white/10 mx-1" />
 
                 {/* Likes Count + Heart */}
-                <div 
+                <div
                     className="flex items-center gap-2"
                 >
                     <span className={`text-[12px] font-bold transition-colors whitespace-nowrap ${liked ? 'text-red-400' : 'text-white group-hover:text-white/90'}`}>
                         {displayLikes.toLocaleString()}
                     </span>
-                    <div className={`relative w-3.5 h-3.5 transition-transform ${!liked ? 'heart-pulsate' : 'scale-110 active:scale-95'}`}>
-                        <Image 
-                            src={liked ? "/heart.png" : "/heart-no.png"} 
-                            alt="Heart" 
-                            fill 
-                            className={`object-contain transition-all ${liked ? 'brightness-125 heart-active' : 'brightness-100 opacity-90 group-hover:opacity-100'}`} 
+                    <div 
+                        ref={heartRef}
+                        className={`relative w-3.5 h-3.5 heart-icon-container transition-transform ${liked ? 'heart-pulsate scale-110' : ''}`}
+                    >
+                        <Image
+                            src={liked ? "/heart.png" : "/heart-no.png"}
+                            alt="Heart"
+                            fill
+                            className={`object-contain transition-all ${liked ? 'brightness-125 heart-active' : 'brightness-100 group-hover:opacity-100'}`}
                         />
                     </div>
                 </div>

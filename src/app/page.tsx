@@ -12,13 +12,16 @@ export default function Home() {
         <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-16 items-center">
 
           {/* ── Left: Brand + Guide ── */}
-          <div className="flex flex-col gap-8 items-center md:items-start text-center md:text-left animate-in fade-in slide-in-from-left-8 duration-1000">
-            <div className="flex flex-col gap-4 md:gap-3">
-              <h1 className="text-6xl lg:text-[5.5rem] font-extrabold tracking-[-0.04em] text-white leading-none"
+          <div className="flex flex-col gap-8 items-center text-center animate-in fade-in slide-in-from-left-8 duration-1000">
+            <div className="flex flex-col items-center gap-6 md:gap-8">
+              <h1 className="text-6xl sm:text-7xl md:text-9xl font-black text-white tracking-tighter"
                 style={{ textShadow: "0 0 60px rgba(255,255,255,0.25), 0 2px 4px rgba(0,0,0,0.5)" }}>
                 {branding.brandName}
               </h1>
-              <div className="max-w-md mx-auto md:mx-0 w-full">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-black text-white/90 tracking-tight">
+                {branding.headline}
+              </h2>
+              <div className="max-w-xl w-full text-center">
                 <RotatingSubline phrases={branding.sublines} />
               </div>
             </div>

@@ -21,6 +21,13 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
     const [result, setResult] = useState<ShortenResult | null>(null);
     const [loading, setLoading] = useState(false);
     const [copied, setCopied] = useState(false);
+    const [currentHost, setCurrentHost] = useState(branding.displayDomain);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setCurrentHost(window.location.host);
+        }
+    }, []);
 
     // JTBD-5: Auto-copy on success
     useEffect(() => {
@@ -187,7 +194,7 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
                 <div className="flex flex-col gap-1.5">
                     <label className="text-[10px] text-white/60 uppercase tracking-[0.2em] font-bold ml-1">Custom Slug</label>
                     <div className="flex items-center glass-input rounded-2xl overflow-hidden focus-within:ring-2 focus-within:ring-white/10">
-                        <span className="pl-4 text-white/50 font-mono text-sm">{branding.displayDomain}/</span>
+                        <span className="pl-4 text-white/50 font-mono text-sm">{currentHost}/</span>
                         <input
                             type="text"
                             value={customSlug}
@@ -210,7 +217,11 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
 
                     {/* Short URL row */}
                     <div className="flex items-center gap-2">
-                        <div className="flex-1 px-4 py-3 bg-black/40 border border-white/10 rounded-xl font-mono text-sm break-all select-all truncate text-white">
+                        <div 
+                            onClick={handleCopy}
+                            className="flex-1 px-4 py-3 bg-black/40 border border-white/10 rounded-xl font-mono text-sm break-all cursor-pointer hover:bg-black/60 transition-all truncate text-white"
+                            title="Click to copy"
+                        >
                             {result.shortUrl}
                         </div>
                         <button
