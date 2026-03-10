@@ -28,6 +28,8 @@ export function Navbar({ branding }: NavbarProps) {
     }, []);
 
     useEffect(() => {
+        if (!db) return;
+        
         const statsRef = doc(db, "stats", "global");
         const unsubscribe = onSnapshot(statsRef, (snapshot) => {
             if (snapshot.exists()) {
@@ -44,7 +46,7 @@ export function Navbar({ branding }: NavbarProps) {
             console.error("Real-time stats error:", error);
         });
         return () => unsubscribe();
-    }, []);
+    }, [db]);
 
     // Smooth Counter Animations
     useEffect(() => {
