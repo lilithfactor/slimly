@@ -1,0 +1,62 @@
+{
+    "brandName": "Slimly",
+    "headline": "Slimly",
+    "sublines": [
+        "The ultimate link shortner.",
+        "The ultimate gym for your links.",
+        "Shrink it. Share it.",
+        "Your links, on a diet.",
+        "Clean links for a cluttered web.",
+        "Shorten links before they embarrass you.",
+        "Make long links vanish. Poof. Magic.",
+        "Ugly URLs? Not on our watch.",
+        "Because nobody likes a mouthful URL.",
+        "Shorten it. Or regret it forever.",
+        "Links too long? We got the scissors.",
+        "From Frankenstein links to sleek pros.",
+        "Your links deserve better.",
+        "Short, branded, hilarious(ly effective).",
+        "Click magnets. Zero ugly vibes.",
+        "Shorten like a boss.",
+        "No more 'copy-paste nightmares'.",
+        "Links that don't suck. Finally."
+    ],
+    "logo": {
+        "text": "Slimly",
+        "image": "/logo.png"
+    },
+    "typography": {
+        "primaryFont": "Manrope",
+        "fallbackFont": "sans-serif"
+    },
+    "colors": {
+        "primary": "#ffffff",
+        "secondary": "rgba(255, 255, 255, 0.8)"
+    },
+    "crosshairCursor": {
+        "enabled": true,
+        "color": "#ffffff"
+    },
+    "background": {
+        "gooey": true,
+        "baseBackground": "#0a0a0a",
+        "colors": [
+            "108, 0, 162",
+            "0, 17, 82",
+            "18, 113, 255",
+            "221, 74, 255",
+            "100, 220, 255"
+        ],
+        "interactiveColor": "140, 100, 255"
+    },
+    "credits": {
+        "author": "Pranav",
+        "portfolioUrl": "https://lilithfactor.notion.site/pranav-upadhyay",
+        "linkedinUrl": "https://www.linkedin.com/in/pranav-upadhyay/"
+    },
+    "linksOutLabel": "Links Out",
+    "heartsInLabel": "",
+    "initialLikesCount": 13,
+    "superpowerKey": "proXA1",
+    "displayDomain": "slimly.co.in"
+}
