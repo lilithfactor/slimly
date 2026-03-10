@@ -8,6 +8,7 @@ import { db } from "@/lib/firebase";
 import { doc, onSnapshot } from "firebase/firestore";
 import { likeProjectAction } from "@/app/actions/StatsActions";
 import { gsap } from "gsap";
+import { trackEvent } from "@/lib/mixpanel";
 
 interface NavbarProps {
     branding: BrandingConfig;
@@ -73,6 +74,7 @@ export function Navbar({ branding }: NavbarProps) {
         if (res.success) {
             localStorage.setItem("slimly_liked", "true");
             setLiked(true);
+            trackEvent("Heart Clicked");
         }
         setLikeLoading(false);
     };

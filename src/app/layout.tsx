@@ -43,6 +43,8 @@ import Crosshair from "@/components/ui/Crosshair";
 import { Footer } from "@/components/ui/Footer";
 import { Navbar } from "@/components/ui/Navbar";
 
+import MixpanelProvider from "@/components/analytics/MixpanelProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -54,14 +56,16 @@ export default function RootLayout({
       <body
         className={`${manrope.className} antialiased ${branding.crosshairCursor?.enabled ? 'hide-cursor' : ''}`}
       >
-        {branding.crosshairCursor?.enabled && (
-          <Crosshair {...branding.crosshairCursor} />
-        )}
-        <Navbar branding={branding} />
-        <Footer branding={branding} />
-        <GooeyGradientBackground branding={branding}>
-          {children}
-        </GooeyGradientBackground>
+        <MixpanelProvider>
+          {branding.crosshairCursor?.enabled && (
+            <Crosshair {...branding.crosshairCursor} />
+          )}
+          <Navbar branding={branding} />
+          <Footer branding={branding} />
+          <GooeyGradientBackground branding={branding}>
+            {children}
+          </GooeyGradientBackground>
+        </MixpanelProvider>
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import React, { useState, Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { shortenUrlAction, ShortenResult } from "@/app/actions/ShortenAction";
 import { ShortcutHints } from "./ShortcutHints";
+import { trackEvent } from "@/lib/mixpanel";
 
 import { BrandingConfig } from "@/lib/branding";
 
@@ -93,6 +94,14 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
         }
 
         const res = await shortenUrlAction(formData);
+        
+        if (res.success) {
+            trackEvent("Link Shortened", {
+                originalUrl: url,
+                isCustomSlug: !!customSlug,
+            });
+        }
+
         setResult(res);
         setLoading(false);
     };
