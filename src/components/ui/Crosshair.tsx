@@ -144,22 +144,43 @@ const Crosshair: React.FC<CrosshairProps> = ({ color = 'white', containerRef = n
       animationFrameId = requestAnimationFrame(render);
     };
 
-    const links = document.querySelectorAll('a, button, [role="button"]');
+    const isClickable = (el: HTMLElement | null): boolean => {
+      if (!el || el === document.body || el === document.documentElement) return false;
+      
+      const style = window.getComputedStyle(el);
+      const isInteractive = 
+        style.cursor === 'pointer' || 
+        ['A', 'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'].includes(el.tagName) ||
+        el.getAttribute('role') === 'button' ||
+        el.hasAttribute('onclick');
 
-    links.forEach(link => {
-      link.addEventListener('mouseenter', enter);
-      link.addEventListener('mouseleave', leave);
-    });
+      if (isInteractive) return true;
+      return isClickable(el.parentElement);
+    };
+
+    let currentTarget: HTMLElement | null = null;
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (isClickable(target)) {
+        if (currentTarget !== target) {
+          currentTarget = target;
+          enter();
+        }
+      } else if (currentTarget) {
+        currentTarget = null;
+        leave();
+      }
+    };
+
+    window.addEventListener('mouseover', handleMouseOver);
 
     return () => {
       target.removeEventListener('mousemove', handleMouseMove as any);
       target.removeEventListener('touchmove', handleMouseMove as any);
       target.removeEventListener('mousemove', onInitialMove as any);
       target.removeEventListener('touchmove', onInitialMove as any);
-      links.forEach(link => {
-        link.removeEventListener('mouseenter', enter);
-        link.removeEventListener('mouseleave', leave);
-      });
+      window.removeEventListener('mouseover', handleMouseOver);
       cancelAnimationFrame(animationFrameId);
     };
   }, [containerRef]);

@@ -43,7 +43,10 @@ next-env.d.ts
 /src/generated/prisma
 
 # Internal Context
-/context/
+/context/*
+!/context/specific/
+/context/specific/*
+!/context/specific/branding.json
 /directives/
 /execution/
 README.GSD.md
@@ -62,7 +65,11 @@ slimly-lf-firebase.json
 /logo/
 /fonts/
 /public/*.png
+!/public/heart*.png
+!/public/logo.png
+!/public/github.png
+!/public/linkedin.png
+!/public/portfolio.png
 !/public/favicon.ico
 !/public/vercel.svg
 !/public/next.svg
-

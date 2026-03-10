@@ -8,17 +8,20 @@ export default function Home() {
   return (
     <div className="h-screen w-screen flex flex-col font-sans overflow-hidden">
       {/* 2-col body — vertically centered */}
-      <div className="flex-1 flex items-center justify-center px-6 md:px-12 lg:px-20">
-        <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+      <div className="flex-1 flex items-center justify-center px-6 md:px-12 lg:px-20 overflow-y-auto md:overflow-hidden py-20 md:py-0">
+        <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-16 items-center">
 
           {/* ── Left: Brand + Guide ── */}
-          <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-left-8 duration-1000">
-            <div className="flex flex-col gap-3">
-              <h1 className="text-6xl lg:text-[5.5rem] font-extrabold tracking-[-0.04em] text-white leading-none"
+          <div className="flex flex-col gap-8 items-center text-center animate-in fade-in slide-in-from-left-8 duration-1000">
+            <div className="flex flex-col items-center gap-6 md:gap-8">
+              <h1 className="text-6xl sm:text-7xl md:text-9xl font-black text-white tracking-tighter"
                 style={{ textShadow: "0 0 60px rgba(255,255,255,0.25), 0 2px 4px rgba(0,0,0,0.5)" }}>
-                {branding.headline}
+                {branding.brandName}
               </h1>
-              <div className="max-w-xs">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-black text-white/90 tracking-tight">
+                {branding.headline}
+              </h2>
+              <div className="max-w-xl w-full text-center">
                 <RotatingSubline phrases={branding.sublines} />
               </div>
             </div>
