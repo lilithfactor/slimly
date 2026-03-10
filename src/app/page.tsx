@@ -18,7 +18,7 @@ export default function Home() {
                 style={{ textShadow: "0 0 60px rgba(255,255,255,0.25), 0 2px 4px rgba(0,0,0,0.5)" }}>
                 {branding.brandName}
               </h1>
-              <div className="max-w-xs mx-auto md:mx-0">
+              <div className="max-w-md mx-auto md:mx-0 w-full">
                 <RotatingSubline phrases={branding.sublines} />
               </div>
             </div>
