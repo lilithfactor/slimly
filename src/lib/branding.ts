@@ -73,9 +73,8 @@ export function getBranding(): BrandingConfig {
             },
             credits: {
                 author: "Pranav",
-                portfolioUrl: "https://pranav.com",
-                linkedinUrl: "https://linkedin.com/in/pranav",
-                githubUrl: "https://github.com/pranav"
+                portfolioUrl: "https://lilithfactor.notion.site/pranav-upadhyay",
+                linkedinUrl: "https://www.linkedin.com/in/pranav-upadhyay/"
             },
             linksOutLabel: "Links Out",
             heartsInLabel: "Hearts In",

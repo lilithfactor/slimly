@@ -44,6 +44,7 @@ next-env.d.ts
 
 # Internal Context
 /context/
+!/context/specific/branding.json
 /directives/
 /execution/
 README.GSD.md

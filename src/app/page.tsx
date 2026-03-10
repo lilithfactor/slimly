@@ -16,7 +16,7 @@ export default function Home() {
             <div className="flex flex-col gap-3">
               <h1 className="text-6xl lg:text-[5.5rem] font-extrabold tracking-[-0.04em] text-white leading-none"
                 style={{ textShadow: "0 0 60px rgba(255,255,255,0.25), 0 2px 4px rgba(0,0,0,0.5)" }}>
-                {branding.headline}
+                {branding.brandName}
               </h1>
               <div className="max-w-xs">
                 <RotatingSubline phrases={branding.sublines} />
