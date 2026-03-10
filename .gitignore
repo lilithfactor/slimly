@@ -39,3 +39,30 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/src/generated/prisma
+
+# Internal Context
+/context/
+/directives/
+/execution/
+README.GSD.md
+base64_output.txt
+
+# Temporary/System files
+*.txt
+*.log
+.DS_Store
+
+# Firebase Secrets
+slimly-lf-firebase.json
+
+# Static Assets
+
+/logo/
+/fonts/
+/public/*.png
+!/public/favicon.ico
+!/public/vercel.svg
+!/public/next.svg
+
