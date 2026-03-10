@@ -100,7 +100,10 @@ export function Navbar({ branding }: NavbarProps) {
             `}</style>
 
             {/* Stats Pill: # Links Out # <heart> In */}
-            <div className="flex items-center gap-4 px-5 py-2.5 glass-panel rounded-full border-white/5 bg-black/40 backdrop-blur-xl shadow-2xl border border-white/10 select-none pointer-events-auto cursor-default">
+            <div 
+                className="flex items-center gap-4 px-5 py-2.5 glass-panel rounded-full border-white/5 bg-black/40 backdrop-blur-xl shadow-2xl border border-white/10 select-none pointer-events-auto cursor-pointer group active:scale-95 transition-transform"
+                onClick={handleLike}
+            >
                 {/* Links Out */}
                 <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
@@ -114,8 +117,7 @@ export function Navbar({ branding }: NavbarProps) {
 
                 {/* Likes Count + Heart */}
                 <div 
-                    className="flex items-center gap-2 cursor-pointer group"
-                    onClick={handleLike}
+                    className="flex items-center gap-2"
                 >
                     <span className={`text-[12px] font-bold transition-colors whitespace-nowrap ${liked ? 'text-red-400' : 'text-white group-hover:text-white/90'}`}>
                         {displayLikes.toLocaleString()}
