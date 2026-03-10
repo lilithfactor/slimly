@@ -104,7 +104,7 @@ export function Navbar({ branding }: NavbarProps) {
                 {/* Links Out */}
                 <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
-                    <span className="text-white/80 font-bold text-[10px] tracking-wider whitespace-nowrap">
+                    <span className="text-white/80 font-bold text-[12px] tracking-wider whitespace-nowrap">
                         {displayLinks.toLocaleString()} {linksOutLabel}
                     </span>
                 </div>
@@ -117,7 +117,7 @@ export function Navbar({ branding }: NavbarProps) {
                     className="flex items-center gap-2 cursor-pointer group"
                     onClick={handleLike}
                 >
-                    <span className={`text-[10px] font-bold transition-colors whitespace-nowrap ${liked ? 'text-red-400' : 'text-white group-hover:text-white/90'}`}>
+                    <span className={`text-[12px] font-bold transition-colors whitespace-nowrap ${liked ? 'text-red-400' : 'text-white group-hover:text-white/90'}`}>
                         {displayLikes.toLocaleString()}
                     </span>
                     <div className={`relative w-3.5 h-3.5 transition-transform ${!liked ? 'heart-pulsate' : 'scale-110 active:scale-95'}`}>
