@@ -62,7 +62,11 @@ slimly-lf-firebase.json
 /logo/
 /fonts/
 /public/*.png
+!/public/heart*.png
+!/public/logo.png
+!/public/github.png
+!/public/linkedin.png
+!/public/portfolio.png
 !/public/favicon.ico
 !/public/vercel.svg
 !/public/next.svg
-
