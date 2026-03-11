@@ -18,7 +18,7 @@ export const Footer: React.FC<FooterProps> = ({ branding }) => {
             <div className="flex items-center pointer-events-auto transition-all duration-300">
                 <div className="flex items-center glass-panel rounded-full border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl overflow-hidden">
                     {/* Build Credits Section */}
-                    <div className="px-6 md:px-8 py-2.5 text-white text-[10px] md:text-[11px] font-bold tracking-[0.2em] md:tracking-[0.4em] transition-colors cursor-default whitespace-nowrap opacity-70"
+                    <div className="px-4 md:px-5 py-2.5 text-white text-[10px] md:text-[11px] font-bold tracking-[0.2em] md:tracking-[0.4em] transition-colors cursor-default whitespace-nowrap opacity-70"
                         style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
                         BUILT BY {credits.author?.toUpperCase()}
                     </div>
@@ -27,7 +27,7 @@ export const Footer: React.FC<FooterProps> = ({ branding }) => {
                     <div className="w-[3px] h-3 bg-white/30 shrink-0" />
 
                     {/* Social Icons Section */}
-                    <div className="px-6 md:px-8 py-2.5 flex items-center gap-4 md:gap-5">
+                    <div className="px-4 md:px-5 py-2.5 flex items-center gap-4 md:gap-5">
                         {credits.portfolioUrl && (
                             <a href={credits.portfolioUrl} target="_blank" rel="noopener noreferrer" 
                                className="opacity-40 hover:opacity-100 transition-all hover:scale-110 active:scale-90" title="Portfolio">

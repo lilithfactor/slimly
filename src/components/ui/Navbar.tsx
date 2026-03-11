@@ -126,7 +126,7 @@ export function Navbar({ branding }: NavbarProps) {
                 onClick={handleLike}
             >
                 {/* Links Out Section */}
-                <div className="flex items-center gap-2.5 px-6 md:px-8 py-2.5">
+                <div className="flex items-center gap-2.5 px-4 md:px-5 py-2.5">
                     <svg
                         viewBox="0 0 24 24"
                         fill="none"
@@ -148,7 +148,7 @@ export function Navbar({ branding }: NavbarProps) {
                 <div className="w-[3px] h-3 bg-white/30 shrink-0" />
 
                 {/* Likes Count + Heart Section */}
-                <div className="flex items-center gap-2.5 px-6 md:px-8 py-2.5">
+                <div className="flex items-center gap-2.5 px-4 md:px-5 py-2.5">
                     <span className={`text-[12px] font-bold transition-colors whitespace-nowrap ${liked ? 'text-red-400' : 'text-white group-hover:text-white/90'}`}>
                         {displayLikes.toLocaleString()}
                     </span>
