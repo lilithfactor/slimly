@@ -18,7 +18,7 @@ export default function Home() {
                 style={{ textShadow: "0 0 60px rgba(255,255,255,0.25), 0 2px 4px rgba(0,0,0,0.5)" }}>
                 {branding.brandName}
               </h1>
-              <h2 className="text-1xl sm:text-3xl md:text-5xl font-black text-white/90 tracking-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-black text-white/90 tracking-tight">
                 {branding.headline}
               </h2>
               <div className="max-w-xl w-full text-center">
