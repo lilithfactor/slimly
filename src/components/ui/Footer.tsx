@@ -16,7 +16,7 @@ export const Footer: React.FC<FooterProps> = ({ branding }) => {
     return (
         <footer className="fixed bottom-0 left-0 w-full p-6 md:p-10 flex justify-center items-center z-40 select-none pointer-events-none">
             <div className="flex items-center pointer-events-auto transition-all duration-300">
-                <div className="flex items-center gap-4 md:gap-6 px-5 py-2.5 glass-panel rounded-full border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl">
+                <div className="flex items-center gap-5 md:gap-6 px-6 py-2.5 glass-panel rounded-full border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl">
                     {/* Build Credits */}
                     <div className="text-white text-[10px] md:text-[11px] font-bold tracking-[0.2em] md:tracking-[0.4em] transition-colors cursor-default whitespace-nowrap opacity-70"
                         style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
