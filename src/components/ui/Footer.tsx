@@ -14,9 +14,18 @@ export const Footer: React.FC<FooterProps> = ({ branding }) => {
 
 
     return (
-        <footer className="fixed bottom-0 left-0 w-full p-4 md:p-8 flex justify-center items-center z-40 select-none pointer-events-none">
+        <footer className="fixed bottom-0 left-0 w-full p-6 md:p-10 flex justify-center items-center z-40 select-none pointer-events-none">
             <div className="flex items-center pointer-events-auto transition-all duration-300">
-                <div className="flex items-center gap-4 md:gap-6 px-4 md:px-6 py-2 glass-panel rounded-full border-white/5 bg-white/5 backdrop-blur-md">
+                <div className="flex items-center gap-4 md:gap-6 px-5 py-2.5 glass-panel rounded-full border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl">
+                    {/* Build Credits */}
+                    <div className="text-white text-[10px] md:text-[11px] font-bold tracking-[0.2em] md:tracking-[0.4em] transition-colors cursor-default whitespace-nowrap opacity-70"
+                        style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
+                        BUILT BY {credits.author?.toUpperCase()}
+                    </div>
+
+                    {/* Divider */}
+                    <div className="w-[1.5px] h-3 bg-white/10 mx-0.5" />
+
                     {/* Social Icons */}
                     <div className="flex items-center gap-4 md:gap-5">
                         {credits.portfolioUrl && (
@@ -37,15 +46,6 @@ export const Footer: React.FC<FooterProps> = ({ branding }) => {
                                 <Image src="/github.png" alt="GitHub" width={16} height={16} className="brightness-0 invert" />
                             </a>
                         )}
-                    </div>
-
-                    {/* Divider */}
-                    <div className="w-[1px] h-4 bg-white/10" />
-
-                    {/* Build Credits */}
-                    <div className="text-white text-[10px] md:text-[11px] font-bold tracking-[0.2em] md:tracking-[0.4em] transition-colors cursor-default whitespace-nowrap opacity-60"
-                        style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
-                        BUILT BY {credits.author?.toUpperCase()}
                     </div>
                 </div>
             </div>
