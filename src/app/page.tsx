@@ -8,8 +8,8 @@ export default function Home() {
   return (
     <div className="h-[100dvh] w-screen flex flex-col font-sans overflow-hidden">
       {/* 2-col body — vertically centered */}
-      <div className="flex-1 flex items-center justify-center px-6 md:px-12 lg:px-20 overflow-y-auto md:overflow-hidden pt-20 pb-40 md:py-0">
-        <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-16 items-center">
+      <div className="flex-1 flex items-center justify-center px-6 md:px-12 lg:px-20 overflow-y-auto md:overflow-hidden pt-28 pb-32 md:py-0">
+        <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
 
           {/* ── Left: Brand + Guide ── */}
           <div className="flex flex-col gap-8 items-center text-center animate-in fade-in slide-in-from-left-8 duration-1000">
