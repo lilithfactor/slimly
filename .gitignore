@@ -47,6 +47,7 @@ next-env.d.ts
 !/context/specific/
 /context/specific/*
 !/context/specific/branding.json
+!/context/specific/conclusion.md
 /directives/
 /execution/
 README.GSD.md
