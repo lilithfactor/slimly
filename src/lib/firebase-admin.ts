@@ -30,3 +30,10 @@ function initializeAdmin() {
 }
 
 export const adminDb = typeof window === "undefined" ? initializeAdmin() : null;
+
+export const getAdminAuth = () => {
+    if (!admin.apps.length) initializeAdmin();
+    return admin.auth();
+};
+
+export { admin };

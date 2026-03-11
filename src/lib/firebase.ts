@@ -1,5 +1,6 @@
 import { initializeApp, getApps, getApp, FirebaseApp, FirebaseOptions } from "firebase/app";
 import { getFirestore, Firestore } from "firebase/firestore";
+import { getAuth, Auth } from "firebase/auth";
 import { getAnalytics, isSupported } from "firebase/analytics";
 
 const firebaseConfig: FirebaseOptions = {
@@ -19,8 +20,9 @@ const app: FirebaseApp | null =
         : (firebaseConfig.apiKey ? initializeApp(firebaseConfig) : null);
 
 const db: Firestore | null = app ? getFirestore(app) : null;
+const auth: Auth | null = app ? getAuth(app) : null;
 
-export { app, db };
+export { app, db, auth };
 export const analytics = (typeof window !== "undefined" && app) 
     ? isSupported().then(yes => yes ? getAnalytics(app) : null) 
     : null;

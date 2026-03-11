@@ -152,7 +152,8 @@ const Crosshair: React.FC<CrosshairProps> = ({ color = 'white', containerRef = n
         style.cursor === 'pointer' || 
         ['A', 'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'].includes(el.tagName) ||
         el.getAttribute('role') === 'button' ||
-        el.hasAttribute('onclick');
+        el.hasAttribute('onclick') ||
+        el.hasAttribute('data-fizzy');
 
       if (isInteractive) return true;
       return isClickable(el.parentElement);

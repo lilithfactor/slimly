@@ -120,11 +120,14 @@ export function Navbar({ branding }: NavbarProps) {
 
             {/* Stats Pill: # Links Out # <heart> In */}
             <div
+                role="button"
+                tabIndex={0}
                 className={`flex items-center glass-panel rounded-full border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl overflow-hidden select-none pointer-events-auto transition-all ${liked
                     ? 'cursor-default ring-1 ring-white/10'
                     : 'cursor-pointer group hover:bg-black/50'
                     }`}
                 onClick={handleLike}
+                onKeyDown={(e) => e.key === 'Enter' && handleLike(e as any)}
             >
                 {/* Links Out Section */}
                 <div className="flex items-center gap-2.5 px-4 md:px-5 py-2.5">

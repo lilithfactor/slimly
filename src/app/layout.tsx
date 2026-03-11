@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { GooeyGradientBackground } from "@/components/ui/GooeyGradientBackground";
 import "./globals.css";
@@ -31,11 +31,58 @@ const manrope = localFont({
 
 import { getBranding } from "@/lib/branding";
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateViewport(): Promise<Viewport> {
   const branding = getBranding();
   return {
-    title: branding.brandName,
+    themeColor: branding.colors.primary,
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  };
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const branding = getBranding();
+  const domain = branding.displayDomain;
+  const url = `https://${domain}`;
+
+  return {
+    title: {
+      default: branding.brandName,
+      template: `%s | ${branding.brandName}`,
+    },
     description: branding.headline,
+    metadataBase: new URL(url),
+    alternates: {
+      canonical: "/",
+    },
+    openGraph: {
+      title: branding.brandName,
+      description: branding.headline,
+      url: url,
+      siteName: branding.brandName,
+      locale: "en_US",
+      type: "website",
+      images: [
+        {
+          url: "/logo.png",
+          width: 800,
+          height: 600,
+          alt: branding.brandName,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: branding.brandName,
+      description: branding.headline,
+      images: ["/logo.png"],
+    },
+    icons: {
+      icon: "/logo.png",
+      apple: "/logo.png",
+    },
   };
 }
 
@@ -44,6 +91,7 @@ import { Footer } from "@/components/ui/Footer";
 import { Navbar } from "@/components/ui/Navbar";
 
 import MixpanelProvider from "@/components/analytics/MixpanelProvider";
+import FirebaseAuthProvider from "@/components/auth/FirebaseAuthProvider";
 
 export default function RootLayout({
   children,
@@ -56,15 +104,17 @@ export default function RootLayout({
       <body
         className={`${manrope.className} antialiased ${branding.crosshairCursor?.enabled ? 'hide-cursor' : ''}`}
       >
+        {branding.crosshairCursor?.enabled && (
+          <Crosshair {...branding.crosshairCursor} />
+        )}
         <MixpanelProvider>
-          {branding.crosshairCursor?.enabled && (
-            <Crosshair {...branding.crosshairCursor} />
-          )}
-          <Navbar branding={branding} />
-          <Footer branding={branding} />
-          <GooeyGradientBackground branding={branding}>
-            {children}
-          </GooeyGradientBackground>
+          <FirebaseAuthProvider>
+            <Navbar branding={branding} />
+            <Footer branding={branding} />
+            <GooeyGradientBackground branding={branding}>
+              {children}
+            </GooeyGradientBackground>
+          </FirebaseAuthProvider>
         </MixpanelProvider>
       </body>
     </html>
