@@ -118,7 +118,7 @@ export function Navbar({ branding }: NavbarProps) {
 
             {/* Stats Pill: # Links Out # <heart> In */}
             <div
-                className={`flex items-center gap-4 px-5 py-2.5 glass-panel rounded-full border-white/5 bg-black/40 backdrop-blur-xl shadow-2xl border border-white/10 select-none pointer-events-auto transition-all ${
+                className={`flex items-center px-5 py-2.5 glass-panel rounded-full border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl select-none pointer-events-auto transition-all ${
                     liked 
                         ? 'cursor-default ring-1 ring-white/10' 
                         : 'cursor-pointer group hover:bg-black/50'
@@ -134,7 +134,7 @@ export function Navbar({ branding }: NavbarProps) {
                 </div>
 
                 {/* Premium Separator */}
-                <div className="w-0.5 h-3 bg-white/10 mx-1" />
+                <div className="w-[3px] h-3 bg-white/30 mx-1 shrink-0" />
 
                 {/* Likes Count + Heart */}
                 <div
