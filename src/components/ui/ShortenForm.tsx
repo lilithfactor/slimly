@@ -34,6 +34,10 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
         if (result?.success && result.shortUrl) {
             navigator.clipboard.writeText(result.shortUrl);
             setCopied(true);
+            trackEvent("linkCopied", {
+                functionName: "copy",
+                triggerType: "auto"
+            });
             const timer = setTimeout(() => setCopied(false), 2000);
             return () => clearTimeout(timer);
         }
@@ -54,6 +58,10 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
             const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z]{2,})(\/[^\s]*)?$/i;
             if (urlPattern.test(pastedText)) {
                 setUrl(pastedText);
+                trackEvent("linkPasted", {
+                    functionName: "paste",
+                    triggerType: "shortcut"
+                });
                 // Optionally scroll to input or highlight it
             }
         };
@@ -62,16 +70,24 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
         return () => window.removeEventListener("paste", handleGlobalPaste);
     }, []);
 
-    const handleCopy = async () => {
+    const handleCopy = async (trigger: "manual" | "shortcut" = "manual") => {
         if (result?.shortUrl) {
             await navigator.clipboard.writeText(result.shortUrl);
             setCopied(true);
+            trackEvent("linkCopied", {
+                functionName: "copy",
+                triggerType: trigger
+            });
             setTimeout(() => setCopied(false), 2000);
         }
     };
 
     const handleDownloadQR = () => {
         if (result?.qrDataUrl) {
+            trackEvent("qrDownloaded", {
+                functionName: "qrdownload",
+                triggerType: "manual"
+            });
             const link = document.createElement("a");
             link.href = result.qrDataUrl;
             link.download = `qr-${result.shortUrl?.split('/').pop()}.png`;
@@ -81,7 +97,7 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
         }
     };
 
-    const handleShorten = async () => {
+    const handleShorten = async (trigger: "manual" | "shortcut" = "manual") => {
         if (loading) return;
 
         // Custom validation — no native browser popups
@@ -89,6 +105,13 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
             setResult({ success: false, error: "Paste a link first. Try Ctrl+V anywhere." });
             return;
         }
+
+        trackEvent("linkShortenStart", {
+            functionName: "shorten",
+            triggerType: trigger,
+            originalUrl: url,
+            isCustomSlug: !!customSlug,
+        });
 
         setLoading(true);
         setResult(null);
@@ -103,7 +126,9 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
         const res = await shortenUrlAction(formData);
         
         if (res.success) {
-            trackEvent("Link Shortened", {
+            trackEvent("linkShortenEnd", {
+                functionName: "shorten",
+                triggerType: trigger,
                 originalUrl: url,
                 isCustomSlug: !!customSlug,
             });
@@ -129,7 +154,7 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
 
                 // Only trigger if no form element is focused OR if we want to allow it globally when URL is present
                 if (!isFormElement && url && !loading) {
-                    handleShorten();
+                    handleShorten("shortcut");
                 }
             }
         };
@@ -150,7 +175,7 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
                 if (selection) return;
 
                 // Otherwise, copy the short link and show feedback
-                handleCopy();
+                handleCopy("shortcut");
             }
         };
 
@@ -218,14 +243,14 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
                     {/* Short URL row */}
                     <div className="flex items-center gap-2">
                         <div 
-                            onClick={handleCopy}
+                            onClick={() => handleCopy("manual")}
                             className="flex-1 px-4 py-3 bg-black/40 border border-white/10 rounded-xl font-mono text-sm break-all cursor-pointer hover:bg-black/60 transition-all truncate text-white"
                             title="Click to copy"
                         >
-                            {result.shortUrl}
+                            {result.shortUrl?.replace(/^https?:\/\/(www\.)?/, '')}
                         </div>
                         <button
-                            onClick={handleCopy}
+                            onClick={() => handleCopy("manual")}
                             title="Copy"
                             className={`shrink-0 w-11 h-11 flex items-center justify-center rounded-xl border transition-all ${copied
                                 ? "bg-green-500/20 border-green-500/40 text-green-400"

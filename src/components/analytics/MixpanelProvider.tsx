@@ -9,11 +9,10 @@ export default function MixpanelProvider({
   children: React.ReactNode;
 }) {
   useEffect(() => {
-    initMixpanel();
-    trackEvent("Page View", {
-      path: window.location.pathname,
-      title: document.title,
-    });
+    const init = async () => {
+      await initMixpanel();
+    };
+    init();
   }, []);
 
   return <>{children}</>;

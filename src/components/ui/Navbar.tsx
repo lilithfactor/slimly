@@ -73,23 +73,25 @@ export function Navbar({ branding }: NavbarProps) {
 
     const handleLike = async (e: React.MouseEvent) => {
         if (liked || likeLoading) return;
-        
+
         // 1. Optimistic Update
         setLiked(true);
         localStorage.setItem("slimly_liked", "true");
-        
+
         // 2. Heart "Pop" Animation (Directly via Ref for speed)
         if (heartRef.current) {
-            gsap.fromTo(heartRef.current, 
-                { scale: 1 }, 
-                { scale: 1.5, duration: 0.15, yoyo: true, repeat: 1, ease: "back.out(1.7)" }
+            gsap.fromTo(heartRef.current,
+                { scale: 1 },
+                { scale: 1.5, duration: 0.8, yoyo: true, repeat: 1, ease: "back.out(1.1)" }
             );
         }
 
         setLikeLoading(true);
         const res = await likeProjectAction();
         if (res.success) {
-            trackEvent("Heart Clicked");
+            trackEvent("likeInteract", {
+                likeCount: displayLikes + 1 // displayLikes is updated reactively, but we want the new value
+            });
         } else {
             // Revert on failure
             setLiked(false);
@@ -118,34 +120,39 @@ export function Navbar({ branding }: NavbarProps) {
 
             {/* Stats Pill: # Links Out # <heart> In */}
             <div
-                className={`flex items-center gap-4 px-5 py-2.5 glass-panel rounded-full border-white/5 bg-black/40 backdrop-blur-xl shadow-2xl border border-white/10 select-none pointer-events-auto transition-all ${
-                    liked 
-                        ? 'cursor-default ring-1 ring-white/10' 
-                        : 'cursor-pointer group hover:bg-black/50'
-                }`}
+                className={`flex items-center glass-panel rounded-full border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl overflow-hidden select-none pointer-events-auto transition-all ${liked
+                    ? 'cursor-default ring-1 ring-white/10'
+                    : 'cursor-pointer group hover:bg-black/50'
+                    }`}
                 onClick={handleLike}
             >
-                {/* Links Out */}
-                <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
+                {/* Links Out Section */}
+                <div className="flex items-center gap-2.5 px-4 md:px-5 py-2.5">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-3.5 h-3.5 text-white/50"
+                    >
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                    </svg>
                     <span className="text-white/80 font-bold text-[12px] tracking-wider whitespace-nowrap">
                         {displayLinks.toLocaleString()} {linksOutLabel}
                     </span>
                 </div>
 
                 {/* Premium Separator */}
-                <div className="w-0.5 h-3 bg-white/10 mx-1" />
+                <div className="w-[3px] h-3 bg-white/30 shrink-0" />
 
-                {/* Likes Count + Heart */}
-                <div
-                    className="flex items-center gap-2"
-                >
-                    <span className={`text-[12px] font-bold transition-colors whitespace-nowrap ${liked ? 'text-red-400' : 'text-white group-hover:text-white/90'}`}>
-                        {displayLikes.toLocaleString()}
-                    </span>
-                    <div 
+                {/* Likes Count + Heart Section */}
+                <div className="flex items-center gap-2.5 px-4 md:px-5 py-2.5">
+                    <div
                         ref={heartRef}
-                        className={`relative w-3.5 h-3.5 heart-icon-container transition-transform ${liked ? 'heart-pulsate scale-110' : ''}`}
+                        className={`relative w-4 h-4 heart-icon-container transition-transform ${liked ? 'heart-pulsate scale-110' : ''}`}
                     >
                         <Image
                             src={liked ? "/heart.png" : "/heart-no.png"}
@@ -154,6 +161,9 @@ export function Navbar({ branding }: NavbarProps) {
                             className={`object-contain transition-all ${liked ? 'brightness-125 heart-active' : 'brightness-100 group-hover:opacity-100'}`}
                         />
                     </div>
+                    <span className={`text-[12px] font-bold transition-colors whitespace-nowrap ${liked ? 'text-red-400' : 'text-white group-hover:text-white/90'}`}>
+                        {displayLikes.toLocaleString()}
+                    </span>
                 </div>
             </div>
         </div>
