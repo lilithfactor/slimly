@@ -73,16 +73,16 @@ export function Navbar({ branding }: NavbarProps) {
 
     const handleLike = async (e: React.MouseEvent) => {
         if (liked || likeLoading) return;
-        
+
         // 1. Optimistic Update
         setLiked(true);
         localStorage.setItem("slimly_liked", "true");
-        
+
         // 2. Heart "Pop" Animation (Directly via Ref for speed)
         if (heartRef.current) {
-            gsap.fromTo(heartRef.current, 
-                { scale: 1 }, 
-                { scale: 1.5, duration: 0.15, yoyo: true, repeat: 1, ease: "back.out(1.7)" }
+            gsap.fromTo(heartRef.current,
+                { scale: 1 },
+                { scale: 1.5, duration: 0.8, yoyo: true, repeat: 1, ease: "back.out(1.1)" }
             );
         }
 
@@ -120,11 +120,10 @@ export function Navbar({ branding }: NavbarProps) {
 
             {/* Stats Pill: # Links Out # <heart> In */}
             <div
-                className={`flex items-center glass-panel rounded-full border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl overflow-hidden select-none pointer-events-auto transition-all ${
-                    liked 
-                        ? 'cursor-default ring-1 ring-white/10' 
-                        : 'cursor-pointer group hover:bg-black/50'
-                }`}
+                className={`flex items-center glass-panel rounded-full border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl overflow-hidden select-none pointer-events-auto transition-all ${liked
+                    ? 'cursor-default ring-1 ring-white/10'
+                    : 'cursor-pointer group hover:bg-black/50'
+                    }`}
                 onClick={handleLike}
             >
                 {/* Links Out Section */}
@@ -151,7 +150,7 @@ export function Navbar({ branding }: NavbarProps) {
 
                 {/* Likes Count + Heart Section */}
                 <div className="flex items-center gap-2.5 px-4 md:px-5 py-2.5">
-                    <div 
+                    <div
                         ref={heartRef}
                         className={`relative w-4 h-4 heart-icon-container transition-transform ${liked ? 'heart-pulsate scale-110' : ''}`}
                     >

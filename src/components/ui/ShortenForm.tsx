@@ -243,14 +243,14 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
                     {/* Short URL row */}
                     <div className="flex items-center gap-2">
                         <div 
-                            onClick={handleCopy}
+                            onClick={() => handleCopy("manual")}
                             className="flex-1 px-4 py-3 bg-black/40 border border-white/10 rounded-xl font-mono text-sm break-all cursor-pointer hover:bg-black/60 transition-all truncate text-white"
                             title="Click to copy"
                         >
                             {result.shortUrl?.replace(/^https?:\/\/(www\.)?/, '')}
                         </div>
                         <button
-                            onClick={handleCopy}
+                            onClick={() => handleCopy("manual")}
                             title="Copy"
                             className={`shrink-0 w-11 h-11 flex items-center justify-center rounded-xl border transition-all ${copied
                                 ? "bg-green-500/20 border-green-500/40 text-green-400"
