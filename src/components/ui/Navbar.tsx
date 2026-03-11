@@ -149,9 +149,6 @@ export function Navbar({ branding }: NavbarProps) {
 
                 {/* Likes Count + Heart Section */}
                 <div className="flex items-center gap-2.5 px-4 md:px-5 py-2.5">
-                    <span className={`text-[12px] font-bold transition-colors whitespace-nowrap ${liked ? 'text-red-400' : 'text-white group-hover:text-white/90'}`}>
-                        {displayLikes.toLocaleString()}
-                    </span>
                     <div 
                         ref={heartRef}
                         className={`relative w-4 h-4 heart-icon-container transition-transform ${liked ? 'heart-pulsate scale-110' : ''}`}
@@ -163,6 +160,9 @@ export function Navbar({ branding }: NavbarProps) {
                             className={`object-contain transition-all ${liked ? 'brightness-125 heart-active' : 'brightness-100 group-hover:opacity-100'}`}
                         />
                     </div>
+                    <span className={`text-[12px] font-bold transition-colors whitespace-nowrap ${liked ? 'text-red-400' : 'text-white group-hover:text-white/90'}`}>
+                        {displayLikes.toLocaleString()}
+                    </span>
                 </div>
             </div>
         </div>
