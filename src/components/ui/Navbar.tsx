@@ -89,7 +89,9 @@ export function Navbar({ branding }: NavbarProps) {
         setLikeLoading(true);
         const res = await likeProjectAction();
         if (res.success) {
-            trackEvent("Heart Clicked");
+            trackEvent("likeInteract", {
+                likeCount: displayLikes + 1 // displayLikes is updated reactively, but we want the new value
+            });
         } else {
             // Revert on failure
             setLiked(false);

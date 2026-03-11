@@ -10,6 +10,7 @@ export default function MixpanelProvider({
 }) {
   useEffect(() => {
     initMixpanel();
+    trackEvent("mixpanelInit");
     trackEvent("Page View", {
       path: window.location.pathname,
       title: document.title,

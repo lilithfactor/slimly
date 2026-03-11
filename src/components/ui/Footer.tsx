@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { BrandingConfig } from "@/lib/branding";
+import { trackEvent } from "@/lib/mixpanel";
 
 interface FooterProps {
     branding: BrandingConfig;
@@ -30,18 +31,21 @@ export const Footer: React.FC<FooterProps> = ({ branding }) => {
                     <div className="px-4 md:px-5 py-2.5 flex items-center gap-4 md:gap-5">
                         {credits.portfolioUrl && (
                             <a href={credits.portfolioUrl} target="_blank" rel="noopener noreferrer" 
+                               onClick={() => trackEvent("socialInteract", { primaryTypeName: "portfolio" })}
                                className="opacity-40 hover:opacity-100 transition-all hover:scale-110 active:scale-90" title="Portfolio">
                                 <Image src="/portfolio.png" alt="Portfolio" width={16} height={16} className="brightness-0 invert" />
                             </a>
                         )}
                         {credits.linkedinUrl && (
                             <a href={credits.linkedinUrl} target="_blank" rel="noopener noreferrer"
+                               onClick={() => trackEvent("socialInteract", { primaryTypeName: "linkedin" })}
                                className="opacity-40 hover:opacity-100 transition-all hover:scale-110 active:scale-90" title="LinkedIn">
                                 <Image src="/linkedin.png" alt="LinkedIn" width={16} height={16} className="brightness-0 invert" />
                             </a>
                         )}
                         {credits.githubUrl && (
                             <a href={credits.githubUrl} target="_blank" rel="noopener noreferrer"
+                               onClick={() => trackEvent("socialInteract", { primaryTypeName: "github" })}
                                className="opacity-40 hover:opacity-100 transition-all hover:scale-110 active:scale-90" title="GitHub">
                                 <Image src="/github.png" alt="GitHub" width={16} height={16} className="brightness-0 invert" />
                             </a>
