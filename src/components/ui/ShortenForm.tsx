@@ -222,7 +222,7 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
                             className="flex-1 px-4 py-3 bg-black/40 border border-white/10 rounded-xl font-mono text-sm break-all cursor-pointer hover:bg-black/60 transition-all truncate text-white"
                             title="Click to copy"
                         >
-                            {result.shortUrl}
+                            {result.shortUrl?.replace(/^https?:\/\/(www\.)?/, '')}
                         </div>
                         <button
                             onClick={handleCopy}

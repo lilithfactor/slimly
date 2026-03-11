@@ -6,9 +6,9 @@ import { RotatingSubline } from "@/components/ui/RotatingSubline";
 export default function Home() {
   const branding = getBranding();
   return (
-    <div className="h-screen w-screen flex flex-col font-sans overflow-hidden">
+    <div className="h-[100dvh] w-screen flex flex-col font-sans overflow-hidden">
       {/* 2-col body — vertically centered */}
-      <div className="flex-1 flex items-center justify-center px-6 md:px-12 lg:px-20 overflow-y-auto md:overflow-hidden py-20 md:py-0">
+      <div className="flex-1 flex items-center justify-center px-6 md:px-12 lg:px-20 overflow-y-auto md:overflow-hidden pt-20 pb-40 md:py-0">
         <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-16 items-center">
 
           {/* ── Left: Brand + Guide ── */}
