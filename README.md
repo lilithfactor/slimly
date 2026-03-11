@@ -1,6 +1,10 @@
 # Slimly 🔗
 
+[![Live](https://img.shields.io/badge/Live-slimly.co.in-blue)](https://slimly.co.in)
+
 **The ultimate link shortener with premium aesthetics.**
+
+`url-shortener` `saas` `nextjs`
 
 Slimly is a high-performance URL shortening application built with Next.js, focused on providing a stunning user experience and deep analytical insights.
 
