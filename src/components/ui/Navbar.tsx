@@ -118,34 +118,43 @@ export function Navbar({ branding }: NavbarProps) {
 
             {/* Stats Pill: # Links Out # <heart> In */}
             <div
-                className={`flex items-center px-5 py-2.5 glass-panel rounded-full border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl select-none pointer-events-auto transition-all ${
+                className={`flex items-center glass-panel rounded-full border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl overflow-hidden select-none pointer-events-auto transition-all ${
                     liked 
                         ? 'cursor-default ring-1 ring-white/10' 
                         : 'cursor-pointer group hover:bg-black/50'
                 }`}
                 onClick={handleLike}
             >
-                {/* Links Out */}
-                <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
+                {/* Links Out Section */}
+                <div className="flex items-center gap-2.5 px-6 md:px-8 py-2.5">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-3.5 h-3.5 text-white/50"
+                    >
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                    </svg>
                     <span className="text-white/80 font-bold text-[12px] tracking-wider whitespace-nowrap">
                         {displayLinks.toLocaleString()} {linksOutLabel}
                     </span>
                 </div>
 
                 {/* Premium Separator */}
-                <div className="w-[3px] h-3 bg-white/30 mx-1 shrink-0" />
+                <div className="w-[3px] h-3 bg-white/30 shrink-0" />
 
-                {/* Likes Count + Heart */}
-                <div
-                    className="flex items-center gap-2"
-                >
+                {/* Likes Count + Heart Section */}
+                <div className="flex items-center gap-2.5 px-6 md:px-8 py-2.5">
                     <span className={`text-[12px] font-bold transition-colors whitespace-nowrap ${liked ? 'text-red-400' : 'text-white group-hover:text-white/90'}`}>
                         {displayLikes.toLocaleString()}
                     </span>
                     <div 
                         ref={heartRef}
-                        className={`relative w-3.5 h-3.5 heart-icon-container transition-transform ${liked ? 'heart-pulsate scale-110' : ''}`}
+                        className={`relative w-4 h-4 heart-icon-container transition-transform ${liked ? 'heart-pulsate scale-110' : ''}`}
                     >
                         <Image
                             src={liked ? "/heart.png" : "/heart-no.png"}
