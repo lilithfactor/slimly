@@ -7,6 +7,7 @@ import { ShortcutHints } from "./ShortcutHints";
 import { trackEvent } from "@/lib/mixpanel";
 
 import { BrandingConfig } from "@/lib/branding";
+import { useAuth } from "../auth/FirebaseAuthProvider";
 
 interface ShortenFormProps {
     branding: BrandingConfig;
@@ -18,10 +19,25 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
 
     const [url, setUrl] = useState("");
     const [customSlug, setCustomSlug] = useState("");
+    const [preGeneratedSlug, setPreGeneratedSlug] = useState("");
     const [result, setResult] = useState<ShortenResult | null>(null);
     const [loading, setLoading] = useState(false);
     const [copied, setCopied] = useState(false);
     const [currentHost, setCurrentHost] = useState(branding.displayDomain);
+
+    // Experiment: Pre-fetch slug on mount
+    useEffect(() => {
+        const fetchSlug = async () => {
+            try {
+                const res = await fetch("/api/v1/slug/new");
+                const data = await res.json();
+                if (data.slug) setPreGeneratedSlug(data.slug);
+            } catch (e) {
+                console.warn("Failed to pre-fetch slug for experiment:", e);
+            }
+        };
+        fetchSlug();
+    }, []);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -97,6 +113,8 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
         }
     };
 
+    const { user } = useAuth();
+
     const handleShorten = async (trigger: "manual" | "shortcut" = "manual") => {
         if (loading) return;
 
@@ -121,16 +139,27 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
         formData.append("url", url);
         if (isSuperpower && customSlug) {
             formData.append("customSlug", customSlug);
+        } else if (preGeneratedSlug) {
+            // Experimental path: use pre-fetched slug
+            formData.append("preGeneratedSlug", preGeneratedSlug);
+        }
+
+        if (user?.uid) {
+            formData.append("uid", user.uid);
         }
 
         const res = await shortenUrlAction(formData);
         
         if (res.success) {
+            // Clear used pre-fetched slug
+            setPreGeneratedSlug("");
+            
             trackEvent("linkShortenEnd", {
                 functionName: "shorten",
                 triggerType: trigger,
                 originalUrl: url,
                 isCustomSlug: !!customSlug,
+                shortenTime: res.performanceMs
             });
         }
 
@@ -235,9 +264,16 @@ function ShortenFormContent({ branding }: ShortenFormProps) {
             {result?.success && (
                 <div className="flex flex-col gap-3 p-4 glass-input rounded-[20px] text-white animate-in fade-in slide-in-from-bottom-4 duration-400">
                     {/* Header */}
-                    <div className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse shrink-0" />
-                        <span className="text-xs font-black uppercase tracking-[0.15em] text-white/80">Boom. Shortened.</span>
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse shrink-0" />
+                            <span className="text-xs font-black uppercase tracking-[0.15em] text-white/80">Boom. Shortened.</span>
+                        </div>
+                        {result.performanceMs && (
+                            <span className="text-[10px] font-mono text-white/40 bg-white/5 px-2 py-0.5 rounded-full border border-white/5">
+                                {result.performanceMs.toFixed(1)}ms
+                            </span>
+                        )}
                     </div>
 
                     {/* Short URL row */}

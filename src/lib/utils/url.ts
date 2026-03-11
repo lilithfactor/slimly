@@ -44,3 +44,12 @@ export function generateSlug(url: string, salt: string = ''): string {
     // Take the first 7 characters for a compact slug
     return hash.substring(0, 7);
 }
+
+/**
+ * Generates a random, non-deterministic slug.
+ */
+export function generateRandomSlug(length: number = 7): string {
+    return crypto.randomBytes(Math.ceil(length * 3 / 4))
+        .toString('base64url')
+        .substring(0, length);
+}
